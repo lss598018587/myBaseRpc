@@ -1,5 +1,6 @@
 package com.wm.remoting.netty;
 
+import com.wm.remoting.RPCHook;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.PooledByteBufAllocator;
@@ -68,7 +69,8 @@ public class NettyRemotingServer extends NettyRemotingBase implements RemotingSe
     private final ExecutorService publicExecutor;
     
     private final AcceptorIdleStateTrigger idleStateTrigger = new AcceptorIdleStateTrigger();
-    
+
+    private RPCHook rpcHook;
 
     public NettyRemotingServer(){
     	this(new NettyServerConfig());
@@ -217,6 +219,11 @@ public class NettyRemotingServer extends NettyRemotingBase implements RemotingSe
 	}
 
 
+    @Override
+    public void registerRPCHook(RPCHook rpcHook) {
+        this.rpcHook = rpcHook;
+    }
+
 	@Override
 	public void registerProecessor(byte requestCode, NettyRequestProcessor processor, ExecutorService executor) {
 		ExecutorService _executor = executor;
@@ -251,7 +258,11 @@ public class NettyRemotingServer extends NettyRemotingBase implements RemotingSe
 		return super.invokeSyncImpl(channel, request, timeoutMillis);
 	}
 
-	
+
+    @Override
+    protected RPCHook getRPCHook() {
+        return rpcHook;
+    }
 	
 	private EventLoopGroup initEventLoopGroup(int workers, ThreadFactory bossFactory) {
 		return isNativeEt() ? new EpollEventLoopGroup(workers, bossFactory) : new NioEventLoopGroup(workers, bossFactory);

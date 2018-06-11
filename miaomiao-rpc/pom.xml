@@ -13,6 +13,8 @@
     <module>miaomiao-common</module>
     <module>miaomiao-remoting</module>
       <module>miaomiao-example</module>
+      <module>miaomiao-registry</module>
+      <module>miaomiao-registry-default</module>
   </modules>
 
   <name>miaomiao-rpc</name>
@@ -38,16 +40,16 @@
         <artifactId>miaomiao-common</artifactId>
         <version>${project.version}</version>
       </dependency>
-      <!--<dependency>-->
-        <!--<groupId>${project.groupId}</groupId>-->
-        <!--<artifactId>miaomiao-registry</artifactId>-->
-        <!--<version>${project.version}</version>-->
-      <!--</dependency>-->
-      <!--<dependency>-->
-        <!--<groupId>${project.groupId}</groupId>-->
-        <!--<artifactId>miaomiao-registry-default</artifactId>-->
-        <!--<version>${project.version}</version>-->
-      <!--</dependency>-->
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>miaomiao-registry</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>miaomiao-registry-default</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>miaomiao-remoting</artifactId>

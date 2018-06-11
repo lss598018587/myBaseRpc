@@ -168,15 +168,18 @@ public abstract class NettyRemotingBase {
                 @Override
                 public void run() {
                     try {
-                        /**RPCHook rpcHook = NettyRemotingBase.this.getRPCHook();
+                        RPCHook rpcHook = NettyRemotingBase.this.getRPCHook();
+                        //调用前，做一些文章
                          if (rpcHook != null) {
                          rpcHook.doBeforeRequest(ConnectionUtils.parseChannelRemoteAddr(ctx.channel()), remotingTransporter);
-                         }**/
+                         }
                         final RemotingTransporter response = pair.getKey().processRequest(ctx, remotingTransporter);
-                        /**if (rpcHook != null) {
+
+                        //调用后，做一些文章
+                        if (rpcHook != null) {
                          rpcHook.doAfterResponse(ConnectionUtils.parseChannelRemoteAddr(ctx.channel()),
                          remotingTransporter, response);
-                         }**/
+                         }
                         if (null != response) {
                             ctx.writeAndFlush(response).addListener(new ChannelFutureListener() {
 
@@ -205,7 +208,7 @@ public abstract class NettyRemotingBase {
         }
     }
 
-//	protected abstract RPCHook getRPCHook();
+	protected abstract RPCHook getRPCHook();
 
     /**
      * client处理server端返回的消息的处理

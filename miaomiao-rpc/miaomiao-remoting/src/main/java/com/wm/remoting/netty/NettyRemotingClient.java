@@ -1,5 +1,6 @@
 package com.wm.remoting.netty;
 
+import com.wm.remoting.RPCHook;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.*;
@@ -71,6 +72,7 @@ public class NettyRemotingClient extends NettyRemotingBase implements RemotingCl
 
 	protected HashedWheelTimer timer = new HashedWheelTimer(new NamedThreadFactory("netty.timer"));
 
+	private RPCHook rpcHook;
 
 	private final ConcurrentHashMap<String /* addr */, ChannelWrapper> channelTables = new ConcurrentHashMap<String, ChannelWrapper>();
 	
@@ -256,6 +258,11 @@ public class NettyRemotingClient extends NettyRemotingBase implements RemotingCl
         return true;
 	}
 
+
+
+
+
+
 	class NettyClientHandler extends SimpleChannelInboundHandler<RemotingTransporter> {
 
 		@Override
@@ -268,6 +275,14 @@ public class NettyRemotingClient extends NettyRemotingBase implements RemotingCl
 			processChannelInactive(ctx);
 		}
 	}
+
+
+
+
+
+
+
+
 
 	@Override
 	public void shutdown() {
@@ -298,6 +313,18 @@ public class NettyRemotingClient extends NettyRemotingBase implements RemotingCl
 		}
 	}
 
+	@Override
+	public void registerRPCHook(RPCHook rpcHook) {
+		this.rpcHook = rpcHook;
+	}
+
+	@Override
+	protected RPCHook getRPCHook() {
+		return rpcHook;
+	}
+
+
+
 	private EventLoopGroup initEventLoopGroup(int nWorkers, ThreadFactory workerFactory) {
 		return isNativeEt() ? new EpollEventLoopGroup(nWorkers, workerFactory) : new NioEventLoopGroup(nWorkers, workerFactory);
 	}
@@ -312,17 +339,17 @@ public class NettyRemotingClient extends NettyRemotingBase implements RemotingCl
 		final Channel channel = this.getAndCreateChannel(addr);
 		if (channel != null && channel.isActive()) {
 			try {
-				/** 回调前置钩子
+				/** 回调前置钩子**/
 				if (this.rpcHook != null) {
 					this.rpcHook.doBeforeRequest(addr, request);
-				}**/
+				}
 				// 有了channel，有了request，request中也有了请求的Request.Code和Topic值，那么就是万事具备了，channel.writeAndFlush(request)就OK了
 				RemotingTransporter response = this.invokeSyncImpl(channel, request, timeoutMillis);
-				/**后置回调钩子
+				/**后置回调钩子**/
 				if (this.rpcHook != null) {
 					this.rpcHook.doAfterResponse(ConnectionUtils.parseChannelRemoteAddr(channel), request, response);
 				}
-				**/
+
 				return response;
 			} catch (RemotingSendRequestException e) {
 				logger.warn("invokeSync: send request exception, so close the channel[{}]", addr);

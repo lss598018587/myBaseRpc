@@ -1,6 +1,7 @@
 package com.wm.remoting.netty;
 
-//import org.laopopo.remoting.RPCHook;
+
+import com.wm.remoting.RPCHook;
 
 /**
  * 
@@ -30,6 +31,6 @@ public interface BaseRemotingService {
 	 * 注入钩子，Netty在处理的过程中可以嵌入一些方法，增加代码的灵活性
 	 * @param rpcHook
 	 */
-//	void registerRPCHook(RPCHook rpcHook);
+	void registerRPCHook(RPCHook rpcHook);
 
 }
