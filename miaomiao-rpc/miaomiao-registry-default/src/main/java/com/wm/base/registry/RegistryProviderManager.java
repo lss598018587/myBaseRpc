@@ -114,6 +114,7 @@ public class RegistryProviderManager implements RegistryProviderServer {
 		}
 
 		// channel上打上该服务的标记 方便当channel inactive的时候，直接从channel上拿到标记的属性，通知
+		//用的是channel上面一个set集合，来收集端口和服务
 		attachPublishEventOnChannel(meta, channel);
 
 		// 一个服务的最小单元，也是确定一个服务的最小单位

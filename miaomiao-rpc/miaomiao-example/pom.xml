@@ -30,10 +30,10 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>miaomiao-remoting</artifactId>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>${project.groupId}</groupId>-->
-            <!--<artifactId>laopopo-registry-default</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>miaomiao-registry-default</artifactId>
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>miaomiao-client</artifactId>

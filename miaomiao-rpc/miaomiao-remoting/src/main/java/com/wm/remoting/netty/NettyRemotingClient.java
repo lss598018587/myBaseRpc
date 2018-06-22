@@ -117,7 +117,7 @@ public class NettyRemotingClient extends NettyRemotingBase implements RemotingCl
 						this,
 						new RemotingTransporterDecoder(), //
 						new RemotingTransporterEncoder(), //
-						new IdleStateChecker(timer, 0, WRITER_IDLE_TIME_SECONDS, 0),//
+						new IdleStateChecker(timer, 0, 5, 0),//
 						idleStateTrigger, new NettyClientHandler() };
 			}
 		};

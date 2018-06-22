@@ -36,6 +36,8 @@ public class RemotingTransporterDecoder extends ReplayingDecoder<RemotingTranspo
 
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+		System.out.println("进入到解密的地方了");
+		System.out.println("in>>"+in);
 		switch (state()) {
 		case HEADER_MAGIC:
 			checkMagic(in.readShort()); // MAGIC

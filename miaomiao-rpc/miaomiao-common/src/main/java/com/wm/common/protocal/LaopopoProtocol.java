@@ -11,7 +11,7 @@ package com.wm.common.protocal;
 public class LaopopoProtocol {
 	
 	/** 协议头长度 */
-    public static final int HEAD_LENGTH = 16;
+    public static final int HEAD_LENGTH = 64;
 	
 	/** Magic */
     public static final short MAGIC = (short) 0xbabe;
@@ -108,6 +108,7 @@ public class LaopopoProtocol {
 	public void setCompress(byte compress) {
 		this.compress = compress;
 	}
-    
+
+
 
 }

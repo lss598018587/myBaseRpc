@@ -35,6 +35,7 @@ public class DefaultRegistryProcessor implements NettyRequestProcessor {
 					ConnectionUtils.parseChannelRemoteAddr(ctx.channel()), //
 					request);
 		}
+		System.out.println("注册服务接口了");
 
 		switch (request.getCode()) {
 

@@ -29,6 +29,7 @@ public class RemotingTransporterEncoder extends MessageToByteEncoder<RemotingTra
 	}
 
 	private void doEncodeRemotingTransporter(RemotingTransporter msg, ByteBuf out) throws IOException {
+		System.out.println("进入到加密的地方了！！！！！");
 		byte[] body = serializerImpl().writeObject(msg.getCustomHeader());
 		
 		
